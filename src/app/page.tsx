@@ -1,95 +1,66 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import { Box, Container, Typography } from "@mui/material";
+import Image from "next/image";
+import Recommandation from "./component/Recommandation";
+import { Suspense } from "react";
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    /*<Box sx={{ marginTop: "16px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "16px",
+        }}
+      >
+        <Box>
+          <Image
+            src="/logo.png"
+            alt="logo img"
+            width={100}
+            height={100}
+          ></Image>
+        </Box>
+        <Box>
+          <Typography component="h1" variant="body1">
+            logo
+          </Typography>
+          <Typography>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum
+            possimus animi optio facilis id voluptatem vero, nesciunt molestiae.
+            Facere harum aspernatur consequatur omnis repellat voluptatibus
+            dolor porro illo? Cum, rem.
+          </Typography>
+        </Box>
+      </Box>
+
+      <Typography sx={{ marginTop: "16px" }}>Recommended</Typography>*/
+    <>
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum possimus
+        animi optio facilis id voluptatem vero, nesciunt molestiae. Facere harum
+        aspernatur consequatur omnis repellat voluptatibus dolor porro illo?
+        Cum, rem.
+      </p>
+      <div style={{ display: "flex", gap: "8px" }}>
+        {[...new Array(4)].map((item, i) => {
+          const images = ["image1", "image2", "image3", "image4"];
+          return (
+            <>
+              <Suspense fallback={<p>Loading...</p>}>
+                {/* @ts-expect-error Server Component */}
+                <Recommandation key={i} imgSrc={`/${images[i]}.png`} />
+              </Suspense>
+            </>
+          );
+        })}
       </div>
+    </>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    // </Box>
+  );
+};
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default Home;
