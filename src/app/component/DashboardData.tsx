@@ -21,7 +21,7 @@ const DashboardData = async () => {
   if (!res.ok) {
     throw new Error("can not fetch data");
   }
-  const data = (await res.json()) as PromiseData;
+  const data: PromiseData = await res.json();
 
   return (
     <div>
