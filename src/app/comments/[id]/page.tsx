@@ -2,6 +2,7 @@
 import { Metadata } from "next";
 import { DataType } from "../page";
 import CommentIdCard from "@/app/component/CommentIdCard";
+import React from "react";
 
 interface PropsTypes {
   params: {
@@ -9,35 +10,34 @@ interface PropsTypes {
   };
 }
 
-export const generateMetadata = async ({
-  params,
-}: PropsTypes): Promise<Metadata> => {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/comments/${params.id}`
-  );
-
-  const data = (await res.json()) as DataType;
-  return {
-    title: data.name,
-    description: data.body,
-  };
-};
-
-const page = async ({ params }: PropsTypes) => {
+const Page = async ({ params }: PropsTypes) => {
+  const [data, setData] = React.useState<DataType[] | null>(null);
+  const [error, setError] = React.useState<Error | null>(null);
   const { id } = params;
 
-  const res = await fetch(`api/user?id=${id}`, {
-    cache: "force-cache",
-  });
-  if (!res.ok) {
-    throw new Error();
+  try {
+    const res = await fetch(`api/user?query=${id}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      throw new Error();
+    }
+    const resData: Array<DataType> = await res.json();
+    setData(resData);
+  } catch (e) {
+    if (e instanceof Error) {
+      setError(e);
+    }
   }
-  const data = (await res.json()) as Array<DataType>;
+
+  if (!data && error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <>
       <div>
-        {data.map((item) => (
+        {data?.map((item) => (
           <CommentIdCard key={item.id} {...item} />
         ))}
       </div>
@@ -45,4 +45,4 @@ const page = async ({ params }: PropsTypes) => {
   );
 };
 
-export default page;
+export default Page;
