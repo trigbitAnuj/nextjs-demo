@@ -1,5 +1,10 @@
 import React from "react";
 import CommentCard from "../component/CommentsCard";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "comments",
+};
 
 export interface DataType {
   postId: number;
@@ -12,10 +17,8 @@ export interface DataType {
 export type Data = Array<DataType>;
 
 const page = async () => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`, {
-    cache: "force-cache",
-  });
-  const data = (await res.json()) as Data;
+  const res = await fetch(`https://jsonplaceholder.typicode.com/comments`);
+  const data: Data = await res.json();
   return (
     <section
       style={{
