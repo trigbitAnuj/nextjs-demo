@@ -40,6 +40,7 @@ function Header() {
                 width={100}
                 height={100}
                 alt="Picture of the logo"
+                priority={true}
               />
             </Link>
           </Box>
