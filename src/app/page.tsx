@@ -2,7 +2,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import Recommandation from "./component/Recommandation";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
 const Home: React.FC = () => {
   return (
@@ -48,12 +48,12 @@ const Home: React.FC = () => {
         {[...new Array(4)].map((item, i) => {
           const images = ["image1", "image2", "image3", "image4"];
           return (
-            <>
+            <React.Fragment key={i}>
               <Suspense fallback={<p>Loading...</p>}>
                 {/* @ts-expect-error Server Component */}
-                <Recommandation key={i} imgSrc={`/${images[i]}.png`} />
+                <Recommandation imgSrc={`/${images[i]}.png`} />
               </Suspense>
-            </>
+            </React.Fragment>
           );
         })}
       </div>
